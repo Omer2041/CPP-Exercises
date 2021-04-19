@@ -3,7 +3,6 @@
 #include <algorithm>
 
 #include "Board.hpp"
-#include "Direction.hpp"
 
 using namespace std;
 
@@ -24,7 +23,7 @@ namespace ariel
             {
                 this->board[row + i][col] = x[i];
                 this->rowMax = (unsigned int)max((int)(row + x.length()), (int)(this->rowMax));
-                this->colMax = (unsigned int)max((int)(col), (int)(this->colMax));
+                this->colMax = (unsigned int)max((col), (this->colMax));
             }
         }
         this->rowMin = (unsigned int)min(row, this->rowMin);
@@ -33,7 +32,6 @@ namespace ariel
 
     string Board::read(unsigned int row, unsigned int col, Direction a, unsigned int len)
     {
-
         string ans;
         for (unsigned int i = 0; i < len; i++)
         {
@@ -66,10 +64,10 @@ namespace ariel
     void Board::show()
     {
 
-        for (unsigned int i = rowMin; i < rowMax; i++)
+        for (unsigned int i = rowMin; i <= rowMax; i++)
         {
-            cout << i;
-            cout << ":";
+            // cout << i;
+            // cout << ":";
             for (unsigned int j = colMin; j < colMax; j++)
             {
                 if (this->board[i][j] != 0)
