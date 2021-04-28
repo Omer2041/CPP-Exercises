@@ -36,17 +36,19 @@ using namespace std;
 
 TEST_CASE("check comparison operator ==")
 {
+    ifstream units_file{"units.txt"};
+    NumberWithUnits::read_units(units_file);
     NumberWithUnits ton{10, "ton"};
-    NumberWithUnits kg{10000, "kg"};
-    NumberWithUnits g{10000000, "g"};
+    NumberWithUnits kg{10, "kg"};
+    NumberWithUnits g{10000, "g"};
+    CHECK(kg == kg);
     CHECK(kg == g);
-    CHECK(ton == kg);
+    CHECK(ton == 1000 * kg);
     NumberWithUnits cm{1000, "cm"};
     NumberWithUnits m{10, "m"};
     NumberWithUnits km{0.01, "km"};
     CHECK(cm == m);
     CHECK(m == km);
-
 }
 
 TEST_CASE("check comparison operator !=")
@@ -60,84 +62,79 @@ TEST_CASE("check comparison operator !=")
 
     CHECK(ton != min);
     CHECK(kg != hour);
-
 }
 
 TEST_CASE("check arithmetic operator +")
 {
     NumberWithUnits ton{100, "ton"};
     NumberWithUnits kg{10000, "kg"};
-    NumberWithUnits res{110,"ton"};
-    CHECK(ton+kg == res);
+    NumberWithUnits res{110, "ton"};
+    CHECK(ton + kg == res);
     NumberWithUnits min{20, "min"};
     NumberWithUnits sec{120, "sec"};
-    NumberWithUnits res2{22,"min"};
-    CHECK(min+sec == res2);
+    NumberWithUnits res2{22, "min"};
+    CHECK(min + sec == res2);
 }
 
 TEST_CASE("check arithmetic operator -")
 {
     NumberWithUnits ton{100, "ton"};
     NumberWithUnits kg{10000, "kg"};
-    NumberWithUnits res{90000,"kg"};
-    CHECK(ton-kg == res);
+    NumberWithUnits res{90000, "kg"};
+    CHECK(ton - kg == res);
     NumberWithUnits min{20, "min"};
     NumberWithUnits sec{120, "sec"};
-    NumberWithUnits res2{18,"min"};
-    CHECK(min-sec == res2);
+    NumberWithUnits res2{18, "min"};
+    CHECK(min - sec == res2);
 }
 
 TEST_CASE("check arithmetic operator *")
 {
     NumberWithUnits USD{100, "USD"};
     NumberWithUnits ILS{10000, "ILS"};
-    NumberWithUnits resu{500,"USD"};
-    NumberWithUnits resi{6.66,"ILS"};
-    CHECK(5*USD == resu);
-    CHECK(2*ILS == resi);
+    NumberWithUnits resu{500, "USD"};
+    NumberWithUnits resi{20000, "ILS"};
+    CHECK(5 * USD == resu);
+    CHECK(2 * ILS == resi);
 
     NumberWithUnits m{5000, "m"};
     NumberWithUnits km{21, "km"};
-    NumberWithUnits resm{2500,"m"};
-    NumberWithUnits reskm{84,"km"};
-    CHECK(0.5*m == resm);
-    CHECK(4*km == reskm);
-
+    NumberWithUnits resm{2500, "m"};
+    NumberWithUnits reskm{84, "km"};
+    CHECK(0.5 * m == resm);
+    CHECK(4 * km == reskm);
 }
-
 
 TEST_CASE("check arithmetic operator >")
 {
     NumberWithUnits USD{100, "USD"};
     NumberWithUnits ILS{10000, "ILS"};
-    NumberWithUnits resu{500,"USD"};
-    NumberWithUnits resi{6.66,"ILS"};
+    NumberWithUnits resu{500, "USD"};
+    NumberWithUnits resi{6.66, "ILS"};
     CHECK(resu > USD);
-    CHECK(resi > ILS);
+    CHECK(ILS > resi);
 
     NumberWithUnits m{5000, "m"};
     NumberWithUnits km{21, "km"};
-    NumberWithUnits resm{2500,"m"};
-    NumberWithUnits reskm{84,"km"};
+    NumberWithUnits resm{2500, "m"};
+    NumberWithUnits reskm{84, "km"};
     CHECK(m > resm);
     CHECK(reskm > km);
-
 }
 
 TEST_CASE("check arithmetic operator <")
 {
     NumberWithUnits USD{100, "USD"};
     NumberWithUnits ILS{10000, "ILS"};
-    NumberWithUnits resu{500,"USD"};
-    NumberWithUnits resi{6.66,"ILS"};
+    NumberWithUnits resu{500, "USD"};
+    NumberWithUnits resi{6.66, "ILS"};
     CHECK(USD < resu);
-    CHECK(ILS < resi);
+    CHECK(resi < ILS);
 
     NumberWithUnits m{5000, "m"};
     NumberWithUnits km{21, "km"};
-    NumberWithUnits resm{2500,"m"};
-    NumberWithUnits reskm{84,"km"};
+    NumberWithUnits resm{2500, "m"};
+    NumberWithUnits reskm{84, "km"};
     CHECK(resm < m);
     CHECK(m < reskm);
-
 }

@@ -1,13 +1,16 @@
+#pragma once
+
 #include <string>
 #include <iostream>
 #include <stdexcept>
 #include <map>
 #include <fstream>
 #include <sstream>
-const int DISTANCE = 0;
-const int WEIGHT = 1;
-const int TIME = 2;
-const int MONEY = 3;
+const int INVALIDUNIT = 0;
+const int DISTANCE = 1;
+const int WEIGHT = 2;
+const int TIME = 3;
+const int MONEY = 4;
 
 using namespace std;
 
@@ -19,33 +22,9 @@ namespace ariel
         double size;
         string unit;
         int type;
-        map<string, map<string, double>> convUnit;
 
     public:
-        NumberWithUnits(double s = 0, string un = "") : size(s), unit(un)
-        {
-            this->size = s;
-            this->unit = un;
-            if (un == string("cm") || un == string("m") || un == string("km"))
-            {
-                this->type = DISTANCE;
-            }
-
-            if (un == string("g") || un == string("kg") || un == string("ton"))
-            {
-                this->type = WEIGHT;
-            }
-
-            if (un == string("sec") || un == string("min") || un == string("hour"))
-            {
-                this->type = TIME;
-            }
-
-            if (un == string("USD") || un == string("ILS"))
-            {
-                this->type = MONEY;
-            }
-        }
+        NumberWithUnits(double s, string un);
 
         void static read_units(ifstream &unitfile);
 
