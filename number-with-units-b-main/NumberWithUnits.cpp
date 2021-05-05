@@ -35,7 +35,6 @@ namespace ariel
             newConversion(un1, un2);
             newConversion(un2, un1);
         }
-
     }
 
     //convUnit[g][kg][1\1000]
@@ -43,13 +42,16 @@ namespace ariel
     //convUnit[g][ton][1\1000\1000]
     void NumberWithUnits::newConversion(const string &u1, const string &u2)
     {
-        for (pair<string, double> element : NumberWithUnits::convUnit[u1])
+        for (auto from : NumberWithUnits::convUnit[u1])
         {
-            NumberWithUnits::convUnit[u2][element.first] = NumberWithUnits::convUnit[u1][element.first] * NumberWithUnits::convUnit[u2][u1];
-            NumberWithUnits::convUnit[element.first][u2] = 1 / NumberWithUnits::convUnit[u2][element.first];
+            for (auto to : NumberWithUnits::convUnit[u2])
+            {
+
+                NumberWithUnits::convUnit[u2][from.first] = NumberWithUnits::convUnit[u1][from.first] * NumberWithUnits::convUnit[u2][u1];
+                NumberWithUnits::convUnit[from.first][u2] = 1 / NumberWithUnits::convUnit[u2][from.first];
+            }
         }
     }
-    
 
     // Arithmetic operators: - + += -= ++ --
     NumberWithUnits operator-(const NumberWithUnits &n1, const NumberWithUnits &n2)
@@ -119,9 +121,6 @@ namespace ariel
         return NumberWithUnits(s, unit);
     }
 
-
-
-
     // Mult operators: * *=
     NumberWithUnits operator*(const double x, const NumberWithUnits &n1)
     {
@@ -138,9 +137,6 @@ namespace ariel
         size *= x;
         return *this;
     }
-
-
-
 
     // Compare operators: == != < <= > >=
     bool NumberWithUnits::operator==(const NumberWithUnits &n) const
@@ -192,8 +188,6 @@ namespace ariel
         return this->size > (n.size * convUnit[n.unit][this->unit]) || *this == n;
     }
 
-
-
     // Stream operators: << >>
     ostream &operator<<(ostream &out, const NumberWithUnits &n)
     {
@@ -224,4 +218,3 @@ namespace ariel
         return in;
     }
 }
-
