@@ -73,7 +73,8 @@ namespace ariel
             root = nullptr;
         }
 
-        BinaryTree<T> add_root(const T &info) { return *this; }
+        BinaryTree<T> add_root(const T &info) { 
+            return *this; }
         BinaryTree<T> add_left(const T &info, const T &left) { return *this; }
         BinaryTree<T> add_right(const T &info, const T &right) { return *this; }
 
