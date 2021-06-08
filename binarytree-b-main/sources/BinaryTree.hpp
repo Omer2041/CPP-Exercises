@@ -157,8 +157,7 @@ namespace ariel
             Iterator operator++(int)
             {
                 Iterator temp = *this;
-                cur = Q.front();
-                Q.pop();
+                ++(*this);
                 return temp;
             }
         };
